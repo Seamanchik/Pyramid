@@ -1,0 +1,11 @@
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.csproj.AssemblyReference.cache
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.csproj.SuggestedBindingRedirects.cache
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.Properties.Resources.resources
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.csproj.GenerateResource.cache
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.csproj.CoreCompileInputs.cache
+E:\ProjectsRider\Pyramid\Pyramid\bin\Debug\Pyramid.exe.config
+E:\ProjectsRider\Pyramid\Pyramid\bin\Debug\Pyramid.exe
+E:\ProjectsRider\Pyramid\Pyramid\bin\Debug\Pyramid.pdb
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.exe
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.pdb
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.Form1.resources
