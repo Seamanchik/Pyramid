@@ -7,8 +7,7 @@ namespace Pyramid
 {
     public partial class Form1 : Form
     {
-        private Pyramid _pyramid;
-        private InscribedPyramid _inscribedPyramid;
+        private Pyramids _pyramid;
         private Point _lastMousePos;
         private bool _isLeftMouseDown;
 
@@ -22,7 +21,6 @@ namespace Pyramid
             if (_pyramid != null)
             {
                 _pyramid.Draw(e.Graphics);
-                _inscribedPyramid.Draw(e.Graphics);
             }
         }
 
@@ -44,8 +42,6 @@ namespace Pyramid
 
                 _pyramid.RotateY(deltaX * 0.01f);
                 _pyramid.RotateX(deltaY * 0.01f);
-                _inscribedPyramid.RotateY(deltaX * 0.01f);
-                _inscribedPyramid.RotateX(deltaY * 0.01f);
                 
                 _lastMousePos = e.Location;
                 pictureBox1.Invalidate();
@@ -62,8 +58,7 @@ namespace Pyramid
 
         private void btnCreatePyramid_Click(object sender, EventArgs e)
         {
-            _pyramid = new Pyramid(pictureBox1.Width, pictureBox1.Height);
-            _inscribedPyramid = new InscribedPyramid(pictureBox1.Width, pictureBox1.Height);
+            _pyramid = new Pyramids(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Invalidate();
         }
 
@@ -83,7 +78,6 @@ namespace Pyramid
             {
                 float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
                 _pyramid.Zoom(deltaZoom);
-                _inscribedPyramid.Zoom(deltaZoom);
                 pictureBox1.Invalidate();
             }
         }
@@ -98,27 +92,23 @@ namespace Pyramid
                 {
                     case Keys.W:
                         _pyramid.RotateX(isKeyDown ? delta : 0);
-                        _inscribedPyramid.RotateX(isKeyDown ? delta : 0);
                         break;
                     case Keys.S:
                         _pyramid.RotateX(isKeyDown ? -delta : 0);
-                        _inscribedPyramid.RotateX(isKeyDown ? -delta : 0);
                         break;
                     case Keys.A:
                         _pyramid.RotateY(isKeyDown ? -delta : 0);
-                        _inscribedPyramid.RotateY(isKeyDown ? -delta : 0);
                         break;
                     case Keys.D:
                         _pyramid.RotateY(isKeyDown ? delta : 0);
-                        _inscribedPyramid.RotateY(isKeyDown ? delta : 0);
                         break;
                 }
-
+                
                 pictureBox1.Invalidate();
             }
         }
     }
-
+    
     public class Point3D
     {
         private float X { get; set; }
@@ -161,114 +151,96 @@ namespace Pyramid
         }
     }
 
-    public class Pyramid
+    public class Pyramids
     {
         private readonly Point3D[] _vertices;
+        private readonly Point3D[] _scaledVertices;
 
-        public Pyramid(float width, float height)
+        public Pyramids(float width, float height)
         {
             width /= 6;
             height /= 6;
 
+            float reWidth = width * 0.5f;
+            float reHeight = height * 0.5f;
+            
             _vertices = FillingPyramid(width, height);
+            _scaledVertices = FillingPyramid(reWidth, reHeight);
         }
-        
-        protected Point3D[] FillingPyramid(float width, float height)
+
+        private Point3D[] FillingPyramid(float width, float height)
         {
             Point3D[] pointsArray = new[]
             {
-                new Point3D(width, height, width), 
+                new Point3D(width, height, width),
                 new Point3D(-width, height, width),
-                new Point3D(-width, height, -width), 
+                new Point3D(-width, height, -width),
                 new Point3D(width, height, -width),
-                new Point3D(0, -height, 0), 
+                new Point3D(0, -height, 0),
             };
             return pointsArray;
         }
-
-        public virtual void RotateX(float angle)
+        
+        public void RotateX(float angle)
         {
-            foreach (var vertex in _vertices)
+            RotateXVertices(_vertices, angle);
+            RotateXVertices(_scaledVertices, angle);
+        }
+        
+        public void RotateY(float angle)
+        {
+            RotateYVertices(_vertices, angle);
+            RotateYVertices(_scaledVertices, angle);
+        }
+        
+        public void Zoom(float factor)
+        {
+            ZoomVertices(_vertices, factor);
+            ZoomVertices(_scaledVertices, factor);
+        }
+        
+        private void RotateXVertices(Point3D[] vertices, float angle)
+        {
+            foreach (var vertex in vertices)
             {
+                vertex.RotateX(angle);
                 vertex.RotateX(angle);
             }
         }
-
-        public virtual void RotateY(float angle)
+        
+        private void RotateYVertices(Point3D[] vertices, float angle)
         {
-            foreach (var vertex in _vertices)
+            foreach (var vertex in vertices)
             {
+                vertex.RotateY(angle);
                 vertex.RotateY(angle);
             }
         }
 
-        public virtual void Zoom(float factor)
+        private void ZoomVertices(Point3D[] vertices, float factor)
         {
-            foreach (var vertex in _vertices)
+            foreach (var vertex in vertices)
             {
                 vertex.Zoom(factor);
             }
         }
 
-        public virtual void Draw(Graphics g)
+        public void Draw(Graphics g)
         {
             Pen pen = new Pen(Color.Black);
-
+            Pen pens = new Pen(Color.Red);
+            pens.DashStyle = DashStyle.Dash;
+            
             for (int i = 0; i < 4; i++)
             {
                 g.DrawLine(pen, _vertices[i].To2D(), _vertices[(i + 1) % 4].To2D());
                 g.DrawLine(pen, _vertices[i].To2D(), _vertices[4].To2D());
             }
-        }
-    }
-
-    public class InscribedPyramid : Pyramid
-    {
-        private readonly Point3D[] _inscribedVertices;
-        
-        public InscribedPyramid(float width, float height) : base(width, height)
-        {
-            float scaleFactor = 0.5f;
-
-            width = width / 6 * scaleFactor;
-            height = height / 6 * scaleFactor;
-
-            _inscribedVertices = FillingPyramid(width, height);
-        }
-
-        public override void RotateX(float angle)
-        {
-            foreach (var vertex in _inscribedVertices)
-            {
-                vertex.RotateX(angle);
-            }
-        }
-
-        public override void RotateY(float angle)
-        {
-            foreach (var vertex in _inscribedVertices)
-            {
-                vertex.RotateY(angle);
-            }
-        }
-
-        public override void Zoom(float factor)
-        {
-            foreach (var vertex in _inscribedVertices)
-            {
-                vertex.Zoom(factor);
-            }
-        }
-        
-        public override void Draw(Graphics g)
-        {
-            Pen pen = new Pen(Color.Red);
-            pen.DashStyle = DashStyle.Dash;
 
             for (int i = 0; i < 4; i++)
             {
-                g.DrawLine(pen, _inscribedVertices[i].To2D(), _inscribedVertices[(i + 1) % 4].To2D());
-                g.DrawLine(pen, _inscribedVertices[i].To2D(), _inscribedVertices[4].To2D());
+                g.DrawLine(pens, _scaledVertices[i].To2D(), _scaledVertices[(i + 1) % 4].To2D());
+                g.DrawLine(pens, _scaledVertices[i].To2D(), _scaledVertices[4].To2D());
             }
         }
     }
