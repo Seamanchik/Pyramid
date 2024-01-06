@@ -10,17 +10,19 @@ namespace Pyramid
         private Pyramids _pyramid;
         private Point _lastMousePos;
         private bool _isLeftMouseDown;
+        private readonly Timer _timer = new Timer();
 
         public Form1()
         {
             InitializeComponent();
+            _timer.Tick += timer1_Tick;
         }
 
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
             if (_pyramid != null)
             {
-                _pyramid.Draw(e.Graphics);
+                _pyramid.Draw(e.Graphics, pictureBox1);
             }
         }
 
@@ -42,7 +44,7 @@ namespace Pyramid
 
                 _pyramid.RotateY(deltaX * 0.01f);
                 _pyramid.RotateX(deltaY * 0.01f);
-                
+
                 _lastMousePos = e.Location;
                 pictureBox1.Invalidate();
             }
@@ -60,6 +62,13 @@ namespace Pyramid
         {
             _pyramid = new Pyramids(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Invalidate();
+            TimerStart();
+        }
+
+        private void TimerStart()
+        {
+            _timer.Interval = 25;
+            _timer.Start();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -71,7 +80,16 @@ namespace Pyramid
         {
             HandleKey(e.KeyCode, false);
         }
-        
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (_pyramid != null)
+            {
+                _pyramid.RotateY(0.02f);
+                pictureBox1.Invalidate();
+            }
+        }
+
         private void PictureBox_Scroll(object sender, MouseEventArgs e)
         {
             if (_pyramid != null)
@@ -81,7 +99,7 @@ namespace Pyramid
                 pictureBox1.Invalidate();
             }
         }
-        
+
         private void HandleKey(Keys key, bool isKeyDown)
         {
             if (_pyramid != null)
@@ -103,12 +121,12 @@ namespace Pyramid
                         _pyramid.RotateY(isKeyDown ? delta : 0);
                         break;
                 }
-                
+
                 pictureBox1.Invalidate();
             }
         }
     }
-    
+
     public class Point3D
     {
         private float X { get; set; }
@@ -145,9 +163,17 @@ namespace Pyramid
             Z *= factor;
         }
 
-        public Point To2D()
+        public Point To2D(PictureBox pictureBox)
         {
-            return new Point((int)X + 200, (int)Y + 190);
+            if (pictureBox != null)
+            {
+                int centerX = pictureBox.Width / 2;
+                int centerY = pictureBox.Height / 2;
+
+                return new Point((int)X + centerX, (int)Y + centerY);
+            }
+            else
+                throw new Exception("PictureBox не задан");
         }
     }
 
@@ -163,7 +189,7 @@ namespace Pyramid
 
             float reWidth = width * 0.5f;
             float reHeight = height * 0.5f;
-            
+
             _vertices = FillingPyramid(width, height);
             _scaledVertices = FillingPyramid(reWidth, reHeight);
         }
@@ -180,25 +206,25 @@ namespace Pyramid
             };
             return pointsArray;
         }
-        
+
         public void RotateX(float angle)
         {
             RotateXVertices(_vertices, angle);
             RotateXVertices(_scaledVertices, angle);
         }
-        
+
         public void RotateY(float angle)
         {
             RotateYVertices(_vertices, angle);
             RotateYVertices(_scaledVertices, angle);
         }
-        
+
         public void Zoom(float factor)
         {
             ZoomVertices(_vertices, factor);
             ZoomVertices(_scaledVertices, factor);
         }
-        
+
         private void RotateXVertices(Point3D[] vertices, float angle)
         {
             foreach (var vertex in vertices)
@@ -207,7 +233,7 @@ namespace Pyramid
                 vertex.RotateX(angle);
             }
         }
-        
+
         private void RotateYVertices(Point3D[] vertices, float angle)
         {
             foreach (var vertex in vertices)
@@ -225,22 +251,22 @@ namespace Pyramid
             }
         }
 
-        public void Draw(Graphics g)
+        public void Draw(Graphics g, PictureBox pictureBox)
         {
             Pen pen = new Pen(Color.Black);
             Pen pens = new Pen(Color.Red);
             pens.DashStyle = DashStyle.Dash;
-            
+
             for (int i = 0; i < 4; i++)
             {
-                g.DrawLine(pen, _vertices[i].To2D(), _vertices[(i + 1) % 4].To2D());
-                g.DrawLine(pen, _vertices[i].To2D(), _vertices[4].To2D());
+                g.DrawLine(pen, _vertices[i].To2D(pictureBox), _vertices[(i + 1) % 4].To2D(pictureBox));
+                g.DrawLine(pen, _vertices[i].To2D(pictureBox), _vertices[4].To2D(pictureBox));
             }
 
             for (int i = 0; i < 4; i++)
             {
-                g.DrawLine(pens, _scaledVertices[i].To2D(), _scaledVertices[(i + 1) % 4].To2D());
-                g.DrawLine(pens, _scaledVertices[i].To2D(), _scaledVertices[4].To2D());
+                g.DrawLine(pens, _scaledVertices[i].To2D(pictureBox), _scaledVertices[(i + 1) % 4].To2D(pictureBox));
+                g.DrawLine(pens, _scaledVertices[i].To2D(pictureBox), _scaledVertices[4].To2D(pictureBox));
             }
         }
     }
