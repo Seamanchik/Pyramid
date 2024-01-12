@@ -230,7 +230,6 @@ namespace Pyramid
             foreach (var vertex in vertices)
             {
                 vertex.RotateX(angle);
-                vertex.RotateX(angle);
             }
         }
 
@@ -238,7 +237,6 @@ namespace Pyramid
         {
             foreach (var vertex in vertices)
             {
-                vertex.RotateY(angle);
                 vertex.RotateY(angle);
             }
         }
