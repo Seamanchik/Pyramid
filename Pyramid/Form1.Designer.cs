@@ -1,4 +1,6 @@
-﻿namespace Pyramid
+﻿using System.Windows.Forms;
+
+namespace Pyramid
 {
     partial class Form1
     {
