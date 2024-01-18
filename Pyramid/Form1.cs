@@ -6,7 +6,8 @@ namespace Pyramid
 {
     public partial class Form1 : Form
     {
-        private Pyramids _pyramid;
+        private Pyramid _pyramid;
+        private ScaledPyramid  _scaledPyramid;
         private IRotateble _rotateble;
         private Point _lastMousePos;
         private bool _isLeftMouseDown;
@@ -21,7 +22,10 @@ namespace Pyramid
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
             if (_pyramid != null)
-                _pyramid.Draw(e.Graphics, pictureBox1);
+            {
+                _pyramid.Draw(e.Graphics, pictureBox1, Pens.Black, _pyramid.Vertices);
+                _scaledPyramid.Draw(e.Graphics, pictureBox1, Pens.Red, _scaledPyramid.ScaledVertices);
+            }
         }
 
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -42,11 +46,11 @@ namespace Pyramid
 
                 _rotateble = new RotatebleX();
                 _rotateble.Transform(_pyramid.Vertices, deltaY * 0.01f);
-                _rotateble.Transform(_pyramid.ScaledVertices, deltaY * 0.01f);
+                _rotateble.Transform(_scaledPyramid.ScaledVertices, deltaY * 0.01f);
                 
                 _rotateble = new RotatebleY();
                 _rotateble.Transform(_pyramid.Vertices, deltaX * 0.01f);
-                _rotateble.Transform(_pyramid.ScaledVertices, deltaX * 0.01f);
+                _rotateble.Transform(_scaledPyramid.ScaledVertices, deltaX * 0.01f);
 
                 _lastMousePos = e.Location;
                 pictureBox1.Invalidate();
@@ -61,7 +65,8 @@ namespace Pyramid
 
         private void btnCreatePyramid_Click(object sender, EventArgs e)
         {
-            _pyramid = new Pyramids(pictureBox1.Width, pictureBox1.Height);
+            _pyramid = new Pyramid(pictureBox1.Width, pictureBox1.Height);
+            _scaledPyramid = new ScaledPyramid(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Invalidate();
             TimerStart();
         }
@@ -88,7 +93,7 @@ namespace Pyramid
             {
                 _rotateble = new RotatebleY();
                 _rotateble.Transform(_pyramid.Vertices, 0.02f);
-                _rotateble.Transform(_pyramid.ScaledVertices, 0.02f);
+                _rotateble.Transform(_scaledPyramid.ScaledVertices, 0.02f);
                 pictureBox1.Invalidate();
             }
         }
@@ -100,7 +105,7 @@ namespace Pyramid
                 float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
                 _rotateble = new Zoomable();
                 _rotateble.Transform(_pyramid.Vertices, deltaZoom);
-                _rotateble.Transform(_pyramid.ScaledVertices, deltaZoom);
+                _rotateble.Transform(_scaledPyramid.ScaledVertices, deltaZoom);
                 pictureBox1.Invalidate();
             }
         }
@@ -130,7 +135,7 @@ namespace Pyramid
                 }
                 
                 _rotateble.Transform(_pyramid.Vertices,delta);
-                _rotateble.Transform(_pyramid.ScaledVertices,delta);
+                _rotateble.Transform(_scaledPyramid.ScaledVertices,delta);
                 pictureBox1.Invalidate();
             }
         }

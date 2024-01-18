@@ -58,9 +58,11 @@
         <Compile Include="Point3D.cs" />
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="Pyramids.cs" />
+        <Compile Include="PyramidDrawing.cs" />
+        <Compile Include="Pyramid.cs" />
         <Compile Include="RotatebleX.cs" />
         <Compile Include="RotatebleY.cs" />
+        <Compile Include="ScaledPyramid.cs" />
         <Compile Include="Zoomable.cs" />
         <EmbeddedResource Include="Form1.resx">
           <DependentUpon>Form1.cs</DependentUpon>
