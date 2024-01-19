@@ -48,6 +48,7 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Classes\ChangePyramids.cs" />
         <Compile Include="Classes\Point3D.cs" />
         <Compile Include="Classes\Pyramid.cs" />
         <Compile Include="Classes\PyramidDrawing.cs" />

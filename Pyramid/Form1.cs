@@ -7,8 +7,8 @@ namespace Pyramid
     public partial class Form1 : Form
     {
         private Pyramid _pyramid;
+        private readonly ChangePyramids _changePyramids = new ChangePyramids();
         private ScaledPyramid  _scaledPyramid;
-        private IRotateble _rotateble;
         private Point _lastMousePos;
         private bool _isLeftMouseDown;
         private readonly Timer _timer = new Timer();
@@ -44,13 +44,13 @@ namespace Pyramid
                 int deltaX = e.X - _lastMousePos.X;
                 int deltaY = e.Y - _lastMousePos.Y;
 
-                _rotateble = new RotatebleX();
-                _rotateble.Transform(_pyramid.Vertices, deltaY * 0.01f);
-                _rotateble.Transform(_scaledPyramid.ScaledVertices, deltaY * 0.01f);
+                _changePyramids.SetActiveAction(new RotatebleX());
+                _changePyramids.ChangePyramid(_pyramid.Vertices, deltaY * 0.01f);
+                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, deltaY * 0.01f);
                 
-                _rotateble = new RotatebleY();
-                _rotateble.Transform(_pyramid.Vertices, deltaX * 0.01f);
-                _rotateble.Transform(_scaledPyramid.ScaledVertices, deltaX * 0.01f);
+                _changePyramids.SetActiveAction(new RotatebleY());
+                _changePyramids.ChangePyramid(_pyramid.Vertices, deltaX * 0.01f);
+                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, deltaX * 0.01f);
 
                 _lastMousePos = e.Location;
                 pictureBox1.Invalidate();
@@ -91,9 +91,9 @@ namespace Pyramid
         {
             if (_pyramid != null)
             {
-                _rotateble = new RotatebleY();
-                _rotateble.Transform(_pyramid.Vertices, 0.02f);
-                _rotateble.Transform(_scaledPyramid.ScaledVertices, 0.02f);
+                _changePyramids.SetActiveAction(new RotatebleY());
+                _changePyramids.ChangePyramid(_pyramid.Vertices, 0.02f);
+                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, 0.02f);
                 pictureBox1.Invalidate();
             }
         }
@@ -103,9 +103,10 @@ namespace Pyramid
             if (_pyramid != null)
             {
                 float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
-                _rotateble = new Zoomable();
-                _rotateble.Transform(_pyramid.Vertices, deltaZoom);
-                _rotateble.Transform(_scaledPyramid.ScaledVertices, deltaZoom);
+
+                _changePyramids.SetActiveAction(new Zoomable());
+                _changePyramids.ChangePyramid(_pyramid.Vertices, deltaZoom);
+                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, deltaZoom);
                 pictureBox1.Invalidate();
             }
         }
@@ -119,23 +120,23 @@ namespace Pyramid
                 switch (key)
                 {
                     case Keys.W:
-                        _rotateble = new RotatebleX();
+                        _changePyramids.SetActiveAction(new RotatebleX());
                         break;
                     case Keys.S:
-                        _rotateble = new RotatebleX();
+                        _changePyramids.SetActiveAction(new RotatebleX());
                         break;
                     case Keys.A:
-                        _rotateble = new RotatebleY();
+                        _changePyramids.SetActiveAction(new RotatebleY());
                         delta = -delta;
                         break;
                     case Keys.D:
-                        _rotateble = new RotatebleY();
+                        _changePyramids.SetActiveAction(new RotatebleY());
                         delta = -delta;
                         break;
                 }
                 
-                _rotateble.Transform(_pyramid.Vertices,delta);
-                _rotateble.Transform(_scaledPyramid.ScaledVertices,delta);
+                _changePyramids.ChangePyramid(_pyramid.Vertices,delta);
+                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices,delta);
                 pictureBox1.Invalidate();
             }
         }
