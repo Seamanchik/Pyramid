@@ -7,8 +7,8 @@ namespace Pyramid
     public partial class Form1 : Form
     {
         private Pyramid _pyramid;
-        private readonly ChangePyramids _changePyramids = new ChangePyramids();
-        private ScaledPyramid  _scaledPyramid;
+        private ChangePyramid _changePyramid;
+        private ScaledPyramid _scaledPyramid;
         private Point _lastMousePos;
         private bool _isLeftMouseDown;
         private readonly Timer _timer = new Timer();
@@ -23,8 +23,8 @@ namespace Pyramid
         {
             if (_pyramid != null)
             {
-                _pyramid.Draw(e.Graphics, pictureBox1, Pens.Black, _pyramid.Vertices);
-                _scaledPyramid.Draw(e.Graphics, pictureBox1, Pens.Red, _scaledPyramid.ScaledVertices);
+                _pyramid.Draw(e.Graphics, pictureBox1, Pens.Black, _pyramid.GetVertices());
+                _scaledPyramid.Draw(e.Graphics, pictureBox1, Pens.Red, _scaledPyramid.GetVertices());
             }
         }
 
@@ -44,13 +44,8 @@ namespace Pyramid
                 int deltaX = e.X - _lastMousePos.X;
                 int deltaY = e.Y - _lastMousePos.Y;
 
-                _changePyramids.SetActiveAction(new RotatebleX());
-                _changePyramids.ChangePyramid(_pyramid.Vertices, deltaY * 0.01f);
-                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, deltaY * 0.01f);
-                
-                _changePyramids.SetActiveAction(new RotatebleY());
-                _changePyramids.ChangePyramid(_pyramid.Vertices, deltaX * 0.01f);
-                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, deltaX * 0.01f);
+                _changePyramid.ChangePyramids(new RotatebleX(), deltaY * 0.01f);
+                _changePyramid.ChangePyramids(new RotatebleY(), deltaX * 0.01f);
 
                 _lastMousePos = e.Location;
                 pictureBox1.Invalidate();
@@ -67,6 +62,7 @@ namespace Pyramid
         {
             _pyramid = new Pyramid(pictureBox1.Width, pictureBox1.Height);
             _scaledPyramid = new ScaledPyramid(pictureBox1.Width, pictureBox1.Height);
+            _changePyramid = new ChangePyramid(_pyramid.GetVertices(), _scaledPyramid.GetVertices());
             pictureBox1.Invalidate();
             TimerStart();
         }
@@ -91,9 +87,7 @@ namespace Pyramid
         {
             if (_pyramid != null)
             {
-                _changePyramids.SetActiveAction(new RotatebleY());
-                _changePyramids.ChangePyramid(_pyramid.Vertices, 0.02f);
-                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, 0.02f);
+                _changePyramid.ChangePyramids(new RotatebleY(), 0.02f);
                 pictureBox1.Invalidate();
             }
         }
@@ -104,9 +98,7 @@ namespace Pyramid
             {
                 float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
 
-                _changePyramids.SetActiveAction(new Zoomable());
-                _changePyramids.ChangePyramid(_pyramid.Vertices, deltaZoom);
-                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices, deltaZoom);
+                _changePyramid.ChangePyramids(new Zoomable(), deltaZoom);
                 pictureBox1.Invalidate();
             }
         }
@@ -120,23 +112,21 @@ namespace Pyramid
                 switch (key)
                 {
                     case Keys.W:
-                        _changePyramids.SetActiveAction(new RotatebleX());
+                        _changePyramid.ChangePyramids(new RotatebleX(), delta);
                         break;
                     case Keys.S:
-                        _changePyramids.SetActiveAction(new RotatebleX());
+                        _changePyramid.ChangePyramids(new RotatebleX(), delta);
                         break;
                     case Keys.A:
-                        _changePyramids.SetActiveAction(new RotatebleY());
                         delta = -delta;
+                        _changePyramid.ChangePyramids(new RotatebleY(), delta);
                         break;
                     case Keys.D:
-                        _changePyramids.SetActiveAction(new RotatebleY());
                         delta = -delta;
+                        _changePyramid.ChangePyramids(new RotatebleY(), delta);
                         break;
                 }
-                
-                _changePyramids.ChangePyramid(_pyramid.Vertices,delta);
-                _changePyramids.ChangePyramid(_scaledPyramid.ScaledVertices,delta);
+
                 pictureBox1.Invalidate();
             }
         }

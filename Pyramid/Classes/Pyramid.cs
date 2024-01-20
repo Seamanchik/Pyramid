@@ -2,13 +2,15 @@
 {
     public class Pyramid : PyramidDrawing
     {
-        public readonly Point3D[] Vertices;
+        private readonly Point3D[] _vertices;
         public Pyramid(float width, float height)
         {
             width /= 6;
             height /= 6;
             
-            Vertices = FillingPyramid(width, height);
+            _vertices = FillingPyramid(width, height);
         }
+
+        public override Point3D[] GetVertices() => _vertices;
     }
 }

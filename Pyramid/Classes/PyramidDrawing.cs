@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Pyramid
 {
-    public class PyramidDrawing
+    public abstract class PyramidDrawing
     {
         protected Point3D[] FillingPyramid(float width, float height)
         {
@@ -26,5 +26,7 @@ namespace Pyramid
                 g.DrawLine(pen, vertices[i].To2D(pictureBox), vertices[4].To2D(pictureBox));
             }
         }
+
+        public abstract Point3D[] GetVertices();
     }
 }
