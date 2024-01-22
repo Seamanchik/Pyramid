@@ -38,11 +38,10 @@ namespace Pyramid
             Random rnd = new Random();
             for (int i = 0; i < pyramidList.Item1.Capacity; i++)
             {
-                var vertices = FillingPyramid(width, height);
-                pyramidList.Item1.Add(vertices);
+                pyramidList.Item1.Add(FillingPyramid(width,height));
                 pyramidList.Item2.Add(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)));
-                width -= 30;
-                height -= 30;
+                width /= 1.2f;
+                height /= 1.2f;
             }
         }
 

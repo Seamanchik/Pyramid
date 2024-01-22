@@ -56,15 +56,34 @@ namespace Pyramid
 
         private void btnCreatePyramid_Click(object sender, EventArgs e)
         {
-            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, 1);
-            _changePyramid = new ChangePyramid(_pyramids.GetVertices());
-            pictureBox1.Invalidate();
-            TimerStart();
+            if (CheckPyramidValue(textBox2.Text) && CheckPyramidValue(textBox1.Text))
+            {
+                _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, textBox2.Text);
+                _changePyramid = new ChangePyramid(_pyramids.GetVertices());
+                pictureBox1.Invalidate();
+                TimerStart(textBox1.Text);
+            }
         }
 
-        private void TimerStart()
+        private bool CheckPyramidValue(string text)
         {
-            _timer.Interval = 25;
+            if (string.IsNullOrEmpty(text) || int.Parse(text) == 0 || int.Parse(text) < 0)
+            {
+                MessageBox.Show(@"Введите значение больше нуля", @"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+        
+        private void ChangePictureBoxBackColor(object sender, EventArgs e)
+        {
+            pictureBox1.BackColor = pictureBox1.BackColor == Color.White
+                ? Color.Black : Color.White;
+        }
+
+        private void TimerStart(string number)
+        {
+            _timer.Interval = int.Parse(number);
             _timer.Start();
         }
 
