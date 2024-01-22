@@ -50,11 +50,10 @@
     <ItemGroup>
         <Compile Include="Classes\ChangePyramid.cs" />
         <Compile Include="Classes\Point3D.cs" />
-        <Compile Include="Classes\Pyramid.cs" />
+        <Compile Include="Classes\Pyramids.cs" />
         <Compile Include="Classes\PyramidDrawing.cs" />
         <Compile Include="Classes\RotatebleX.cs" />
         <Compile Include="Classes\RotatebleY.cs" />
-        <Compile Include="Classes\ScaledPyramid.cs" />
         <Compile Include="Classes\Zoomable.cs" />
         <Compile Include="Form1.cs">
             <SubType>Form</SubType>

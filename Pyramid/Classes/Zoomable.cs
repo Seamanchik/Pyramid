@@ -1,12 +1,18 @@
-﻿namespace Pyramid
+﻿using System.Collections.Generic;
+using System.Drawing;
+
+namespace Pyramid
 {
     public class Zoomable : IRotateble
     {
-        public void Transform(Point3D[] vertices, float factor)
+        public void Transform((List<Point3D[]>,List<Color>) vertices, float factor)
         {
-            foreach (var vertex in vertices)
+            for (int i = 0; i < vertices.Item1.Count; i++)
             {
-                vertex.Zoom(factor);
+                for (int j = 0; j < 5; j++)
+                {
+                    vertices.Item1[i][j].Zoom(factor);
+                }
             }
         }
     }

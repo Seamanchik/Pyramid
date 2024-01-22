@@ -1,7 +1,10 @@
-﻿namespace Pyramid
+﻿using System.Collections.Generic;
+using System.Drawing;
+
+namespace Pyramid
 {
     public interface IRotateble
     {
-        void Transform(Point3D[] vertices, float value);
+        void Transform((List<Point3D[]>, List<Color>) vertices, float value);
     }
 }

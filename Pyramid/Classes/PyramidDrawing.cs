@@ -1,11 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Pyramid
 {
     public abstract class PyramidDrawing
     {
-        protected Point3D[] FillingPyramid(float width, float height)
+        private Point3D[] FillingPyramid(float width, float height)
         {
             Point3D[] pointsArray = new[]
             {
@@ -18,15 +20,32 @@ namespace Pyramid
             return pointsArray;
         }
         
-        public void Draw(Graphics g, PictureBox pictureBox, Pen pen, Point3D[] vertices)
+        public void Draw(Graphics g, PictureBox pictureBox, (List<Point3D[]>, List<Color>) vertices)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < vertices.Item1.Count; i++)
             {
-                g.DrawLine(pen, vertices[i].To2D(pictureBox), vertices[(i + 1) % 4].To2D(pictureBox));
-                g.DrawLine(pen, vertices[i].To2D(pictureBox), vertices[4].To2D(pictureBox));
+                Pen pen = new Pen(vertices.Item2[i]);
+                for (int j = 0; j < 4; j++)
+                {
+                    g.DrawLine(pen, vertices.Item1[i][j].To2D(pictureBox), vertices.Item1[i][(j + 1) % 4].To2D(pictureBox));
+                    g.DrawLine(pen, vertices.Item1[i][j].To2D(pictureBox), vertices.Item1[i][4].To2D(pictureBox)); 
+                }
             }
         }
 
-        public abstract Point3D[] GetVertices();
+        protected void InitializePyramid((List<Point3D[]>, List<Color>) pyramidList, float width, float height)
+        {
+            Random rnd = new Random();
+            for (int i = 0; i < pyramidList.Item1.Capacity; i++)
+            {
+                var vertices = FillingPyramid(width, height);
+                pyramidList.Item1.Add(vertices);
+                pyramidList.Item2.Add(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)));
+                width -= 30;
+                height -= 30;
+            }
+        }
+
+        public abstract (List<Point3D[]>,List<Color>) GetVertices();
     }
 }

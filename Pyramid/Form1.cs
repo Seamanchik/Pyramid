@@ -6,9 +6,8 @@ namespace Pyramid
 {
     public partial class Form1 : Form
     {
-        private Pyramid _pyramid;
+        private Pyramids _pyramids;
         private ChangePyramid _changePyramid;
-        private ScaledPyramid _scaledPyramid;
         private Point _lastMousePos;
         private bool _isLeftMouseDown;
         private readonly Timer _timer = new Timer();
@@ -21,11 +20,8 @@ namespace Pyramid
 
         private void PictureBox_Paint(object sender, PaintEventArgs e)
         {
-            if (_pyramid != null)
-            {
-                _pyramid.Draw(e.Graphics, pictureBox1, Pens.Black, _pyramid.GetVertices());
-                _scaledPyramid.Draw(e.Graphics, pictureBox1, Pens.Red, _scaledPyramid.GetVertices());
-            }
+            if (_pyramids != null)
+                _pyramids.Draw(e.Graphics, pictureBox1, _pyramids.GetVertices());
         }
 
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -39,7 +35,7 @@ namespace Pyramid
 
         private void PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isLeftMouseDown && _pyramid != null)
+            if (_isLeftMouseDown && _pyramids != null)
             {
                 int deltaX = e.X - _lastMousePos.X;
                 int deltaY = e.Y - _lastMousePos.Y;
@@ -60,9 +56,8 @@ namespace Pyramid
 
         private void btnCreatePyramid_Click(object sender, EventArgs e)
         {
-            _pyramid = new Pyramid(pictureBox1.Width, pictureBox1.Height);
-            _scaledPyramid = new ScaledPyramid(pictureBox1.Width, pictureBox1.Height);
-            _changePyramid = new ChangePyramid(_pyramid.GetVertices(), _scaledPyramid.GetVertices());
+            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, 1);
+            _changePyramid = new ChangePyramid(_pyramids.GetVertices());
             pictureBox1.Invalidate();
             TimerStart();
         }
@@ -85,7 +80,7 @@ namespace Pyramid
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (_pyramid != null)
+            if (_pyramids != null)
             {
                 _changePyramid.ChangePyramids(new RotatebleY(), 0.02f);
                 pictureBox1.Invalidate();
@@ -94,7 +89,7 @@ namespace Pyramid
 
         private void PictureBox_Scroll(object sender, MouseEventArgs e)
         {
-            if (_pyramid != null)
+            if (_pyramids != null)
             {
                 float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
 
@@ -105,7 +100,7 @@ namespace Pyramid
 
         private void HandleKey(Keys key, bool isKeyDown)
         {
-            if (_pyramid != null)
+            if (_pyramids != null)
             {
                 float delta = isKeyDown ? 0.1f : 0;
 
@@ -115,15 +110,13 @@ namespace Pyramid
                         _changePyramid.ChangePyramids(new RotatebleX(), delta);
                         break;
                     case Keys.S:
-                        _changePyramid.ChangePyramids(new RotatebleX(), delta);
+                        _changePyramid.ChangePyramids(new RotatebleX(), -delta);
                         break;
                     case Keys.A:
-                        delta = -delta;
                         _changePyramid.ChangePyramids(new RotatebleY(), delta);
                         break;
                     case Keys.D:
-                        delta = -delta;
-                        _changePyramid.ChangePyramids(new RotatebleY(), delta);
+                        _changePyramid.ChangePyramids(new RotatebleY(), -delta);
                         break;
                 }
 

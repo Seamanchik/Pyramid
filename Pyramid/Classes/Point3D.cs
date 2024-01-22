@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Pyramid
 {
-    public class Point3D 
+    public sealed class Point3D
     {
         private float X { get; set; }
         private float Y { get; set; }
