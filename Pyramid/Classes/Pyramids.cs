@@ -9,8 +9,8 @@ namespace Pyramid
         public Pyramids(float width, float height, string n)
         {
             _pyramidsList = (new List<Point3D[]>(int.Parse(n)), new List<Color>(int.Parse(n)));
-            width /= 2.9f;
-            height /= 2.9f;
+            width /= 5;
+            height /= 5;
 
             InitializePyramid(_pyramidsList, width, height);
         }

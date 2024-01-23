@@ -33,6 +33,14 @@ namespace Pyramid
             Z = newZ;
         }
 
+        public void RotateZ(float angle)
+        {
+            float newX = (float)(X * Math.Cos(angle) - Y * Math.Sin(angle));
+            float newY = (float)(Y * Math.Cos(angle) + X * Math.Sin(angle));
+            X = newX;
+            Y = newY;
+        }
+
         public void Zoom(float factor)
         {
             X *= factor;

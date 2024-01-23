@@ -54,6 +54,7 @@
         <Compile Include="Classes\PyramidDrawing.cs" />
         <Compile Include="Classes\RotatebleX.cs" />
         <Compile Include="Classes\RotatebleY.cs" />
+        <Compile Include="Classes\RotatebleZ.cs" />
         <Compile Include="Classes\Zoomable.cs" />
         <Compile Include="Form1.cs">
             <SubType>Form</SubType>

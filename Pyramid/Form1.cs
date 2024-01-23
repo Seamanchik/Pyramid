@@ -11,6 +11,7 @@ namespace Pyramid
         private Point _lastMousePos;
         private bool _isLeftMouseDown;
         private readonly Timer _timer = new Timer();
+        private int _numberOfRotation;
 
         public Form1()
         {
@@ -42,6 +43,7 @@ namespace Pyramid
 
                 _changePyramid.ChangePyramids(new RotatebleX(), deltaY * 0.01f);
                 _changePyramid.ChangePyramids(new RotatebleY(), deltaX * 0.01f);
+                _changePyramid.ChangePyramids(new RotatebleZ(), deltaX * 0.01f);
 
                 _lastMousePos = e.Location;
                 pictureBox1.Invalidate();
@@ -56,12 +58,11 @@ namespace Pyramid
 
         private void btnCreatePyramid_Click(object sender, EventArgs e)
         {
-            if (CheckPyramidValue(textBox2.Text) && CheckPyramidValue(textBox1.Text))
+            if (CheckPyramidValue(textBox2.Text))
             {
                 _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, textBox2.Text);
                 _changePyramid = new ChangePyramid(_pyramids.GetVertices());
                 pictureBox1.Invalidate();
-                TimerStart(textBox1.Text);
             }
         }
 
@@ -77,8 +78,16 @@ namespace Pyramid
         
         private void ChangePictureBoxBackColor(object sender, EventArgs e)
         {
-            pictureBox1.BackColor = pictureBox1.BackColor == Color.White
-                ? Color.Black : Color.White;
+            if (pictureBox1.BackColor == Color.White)
+            {
+                pictureBox1.BackColor = Color.FromArgb(17, 28, 17);
+                button1.Text = @"Светлый экран";
+            }
+            else
+            {
+                pictureBox1.BackColor = Color.White;
+                button1.Text = @"Тёмный экран";
+            }
         }
 
         private void TimerStart(string number)
@@ -101,7 +110,19 @@ namespace Pyramid
         {
             if (_pyramids != null)
             {
-                _changePyramid.ChangePyramids(new RotatebleY(), 0.02f);
+                switch (_numberOfRotation)
+                {
+                    case 1:
+                        _changePyramid.ChangePyramids(new RotatebleX(), 0.02f);
+                        break;
+                    case 2:
+                        _changePyramid.ChangePyramids(new RotatebleY(), 0.02f);
+                        break;
+                    case 3:
+                        _changePyramid.ChangePyramids(new RotatebleZ(), 0.02f);
+                        break;
+                }
+
                 pictureBox1.Invalidate();
             }
         }
@@ -142,5 +163,34 @@ namespace Pyramid
                 pictureBox1.Invalidate();
             }
         }
+
+        private void AxisXbutton_Click(object sender, EventArgs e)
+        {
+            if (_pyramids != null && CheckPyramidValue(textBox1.Text))
+            {
+                _numberOfRotation = 1;
+                TimerStart(textBox1.Text);
+            }
+        }
+
+        private void AxisYbutton_Click(object sender, EventArgs e)
+        {
+            if (_pyramids != null && CheckPyramidValue(textBox1.Text))
+            {
+                _numberOfRotation = 2;
+                TimerStart(textBox1.Text);
+            }
+        }
+
+        private void AxisZbutton_Click(object sender, EventArgs e)
+        {
+            if (_pyramids != null && CheckPyramidValue(textBox1.Text))
+            {
+                _numberOfRotation = 3;
+                TimerStart(textBox1.Text);
+            }
+        }
+
+        private void StopButton_Click(object sender, EventArgs e) => _timer.Stop();
     }
 }
