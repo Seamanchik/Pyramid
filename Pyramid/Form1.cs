@@ -228,7 +228,7 @@ namespace Pyramid
 
         private void textBox2_Enter(object sender, EventArgs e)
         {
-            if (textBox1.Text == @"Введите скорость")
+            if (textBox2.Text == @"Введите скорость")
             {
                 textBox2.Text = null;
                 textBox2.ForeColor = Color.Black;
