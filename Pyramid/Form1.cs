@@ -58,34 +58,49 @@ namespace Pyramid
 
         private void btnCreatePyramid_Click(object sender, EventArgs e)
         {
-            if (CheckPyramidValue(textBox2.Text))
+            if (CheckPyramidValue())
             {
-                _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, textBox2.Text);
+                _timer.Stop();
+                _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, textBox1.Text);
                 _changePyramid = new ChangePyramid(_pyramids.GetVertices());
                 pictureBox1.Invalidate();
             }
         }
 
-        private bool CheckPyramidValue(string text)
+        private bool CheckPyramidValue()
         {
-            if (string.IsNullOrEmpty(text) || int.Parse(text) == 0 || int.Parse(text) < 0)
+            if (textBox1.Text == @"Введите кол-во пирамид" || string.IsNullOrEmpty(textBox1.Text) ||
+                int.Parse(textBox1.Text) <= 0)
             {
                 MessageBox.Show(@"Введите значение больше нуля", @"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+
             return true;
         }
-        
+
+        private bool CheckPyramidSpeed()
+        {
+            if (textBox2.Text == @"Введите скорость" || string.IsNullOrEmpty(textBox2.Text) ||
+                int.Parse(textBox2.Text) <= 0)
+            {
+                MessageBox.Show(@"Введите скорость больше нуля", @"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
         private void ChangePictureBoxBackColor(object sender, EventArgs e)
         {
-            if (pictureBox1.BackColor == Color.White)
+            if (pictureBox1.BackColor == Color.FromArgb(207, 215, 206))
             {
-                pictureBox1.BackColor = Color.FromArgb(17, 28, 17);
+                pictureBox1.BackColor = Color.FromArgb(88, 105, 86);
                 button1.Text = @"Светлый экран";
             }
             else
             {
-                pictureBox1.BackColor = Color.White;
+                pictureBox1.BackColor = Color.FromArgb(207, 215, 206);
                 button1.Text = @"Тёмный экран";
             }
         }
@@ -166,31 +181,61 @@ namespace Pyramid
 
         private void AxisXbutton_Click(object sender, EventArgs e)
         {
-            if (_pyramids != null && CheckPyramidValue(textBox1.Text))
+            if (_pyramids != null && CheckPyramidSpeed())
             {
                 _numberOfRotation = 1;
-                TimerStart(textBox1.Text);
+                TimerStart(textBox2.Text);
             }
         }
 
         private void AxisYbutton_Click(object sender, EventArgs e)
         {
-            if (_pyramids != null && CheckPyramidValue(textBox1.Text))
+            if (_pyramids != null && CheckPyramidSpeed())
             {
                 _numberOfRotation = 2;
-                TimerStart(textBox1.Text);
+                TimerStart(textBox2.Text);
             }
         }
 
         private void AxisZbutton_Click(object sender, EventArgs e)
         {
-            if (_pyramids != null && CheckPyramidValue(textBox1.Text))
+            if (_pyramids != null && CheckPyramidSpeed())
             {
                 _numberOfRotation = 3;
-                TimerStart(textBox1.Text);
+                TimerStart(textBox2.Text);
             }
         }
 
         private void StopButton_Click(object sender, EventArgs e) => _timer.Stop();
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1.Text = null;
+            textBox1.ForeColor = Color.Black;
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "")
+            {
+                textBox1.Text = @"Введите кол-во пирамид";
+                textBox1.ForeColor = Color.FromArgb(91, 91, 91);
+            }
+        }
+
+        private void textBox2_Enter(object sender, EventArgs e)
+        {
+            textBox2.Text = null;
+            textBox2.ForeColor = Color.Black;
+        }
+
+        private void textBox2_Leave(object sender, EventArgs e)
+        {
+            if (textBox2.Text == "")
+            {
+                textBox2.Text = @"Введите скорость";
+                textBox2.ForeColor = Color.FromArgb(91, 91, 91);
+            }
+        }
     }
 }
