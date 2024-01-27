@@ -210,8 +210,11 @@ namespace Pyramid
 
         private void textBox1_Enter(object sender, EventArgs e)
         {
-            textBox1.Text = null;
-            textBox1.ForeColor = Color.Black;
+            if (textBox1.Text == @"Введите кол-во пирамид")
+            {
+                textBox1.Text = null;
+                textBox1.ForeColor = Color.Black;
+            }
         }
 
         private void textBox1_Leave(object sender, EventArgs e)
@@ -225,8 +228,11 @@ namespace Pyramid
 
         private void textBox2_Enter(object sender, EventArgs e)
         {
-            textBox2.Text = null;
-            textBox2.ForeColor = Color.Black;
+            if (textBox1.Text == @"Введите скорость")
+            {
+                textBox2.Text = null;
+                textBox2.ForeColor = Color.Black;
+            }
         }
 
         private void textBox2_Leave(object sender, EventArgs e)
