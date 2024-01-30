@@ -48,7 +48,10 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Classes\AxisCheck.cs" />
         <Compile Include="Classes\ChangePyramid.cs" />
+        <Compile Include="Classes\ControlCheckBox.cs" />
+        <Compile Include="Classes\ControlTextBox.cs" />
         <Compile Include="Classes\Point3D.cs" />
         <Compile Include="Classes\Pyramids.cs" />
         <Compile Include="Classes\PyramidDrawing.cs" />
