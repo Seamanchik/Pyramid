@@ -20,7 +20,7 @@ namespace Pyramid.Classes
                 _checkList.Add(check);
         }
 
-        public void ActiveCheck(ChangePyramid pyramids)
+        public void ActiveCheck(ChangePyramid pyramids, int num)
         {
             if (_checkList == null)
                 return;
@@ -29,13 +29,13 @@ namespace Pyramid.Classes
                 switch (checkBox.TabIndex)
                 {
                     case 0:
-                        pyramids.ChangePyramids(new RotatebleX(), 0.02f);
+                        pyramids.ChangePyramids(new RotatebleX(), 0.02f, num);
                         break;
                     case 1:
-                        pyramids.ChangePyramids(new RotatebleY(), 0.02f);
+                        pyramids.ChangePyramids(new RotatebleY(), 0.02f, num);
                         break;
                     case 2:
-                        pyramids.ChangePyramids(new RotatebleZ(), 0.02f);
+                        pyramids.ChangePyramids(new RotatebleZ(), 0.02f, num);
                         break;
                 }
             }

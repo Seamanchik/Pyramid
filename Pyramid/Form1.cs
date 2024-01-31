@@ -9,6 +9,7 @@ namespace Pyramid
 {
     public partial class Form1 : Form
     {
+        private const int NumberOfVertice = 5;
         private Pyramids _pyramids;
         private ChangePyramid _changePyramid;
         private bool _isLeftMouseDown;
@@ -89,7 +90,7 @@ namespace Pyramid
             if (!controltTextBox1.CheckPyramidValue())
                 return;
             _timer.Stop();
-            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, int.Parse(controltTextBox1.Text));
+            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, int.Parse(controltTextBox1.Text), NumberOfVertice);
             _changePyramid = new ChangePyramid(_pyramids.GetVertices());
             pictureBox1.Invalidate();
         }
@@ -108,7 +109,7 @@ namespace Pyramid
         
         private void timer1_Tick(object sender, EventArgs e)
         {
-            AxisCheck.Instance.ActiveCheck(_changePyramid);
+            AxisCheck.Instance.ActiveCheck(_changePyramid, NumberOfVertice);
             pictureBox1.Invalidate();
         }
 
@@ -121,16 +122,16 @@ namespace Pyramid
             switch (key)
             {
                 case Keys.W:
-                    _changePyramid.ChangePyramids(new RotatebleX(), delta);
+                    _changePyramid.ChangePyramids(new RotatebleX(), delta, NumberOfVertice);
                     break;
                 case Keys.S:
-                    _changePyramid.ChangePyramids(new RotatebleX(), -delta);
+                    _changePyramid.ChangePyramids(new RotatebleX(), -delta, NumberOfVertice);
                     break;
                 case Keys.A:
-                    _changePyramid.ChangePyramids(new RotatebleY(), delta);
+                    _changePyramid.ChangePyramids(new RotatebleY(), delta, NumberOfVertice);
                     break;
                 case Keys.D:
-                    _changePyramid.ChangePyramids(new RotatebleY(), -delta);
+                    _changePyramid.ChangePyramids(new RotatebleY(), -delta , NumberOfVertice);
                     break;
             }
 
@@ -170,9 +171,9 @@ namespace Pyramid
             int deltaX = e.X - _lastMousePos.X;
             int deltaY = e.Y - _lastMousePos.Y;
 
-            _changePyramid.ChangePyramids(new RotatebleX(), deltaY * 0.01f);
-            _changePyramid.ChangePyramids(new RotatebleY(), deltaX * 0.01f);
-            _changePyramid.ChangePyramids(new RotatebleZ(), deltaX * 0.01f);
+            _changePyramid.ChangePyramids(new RotatebleX(), deltaY * 0.01f, NumberOfVertice);
+            _changePyramid.ChangePyramids(new RotatebleY(), deltaX * 0.01f, NumberOfVertice);
+            _changePyramid.ChangePyramids(new RotatebleZ(), deltaX * 0.01f, NumberOfVertice);
 
             _lastMousePos = e.Location;
             Invalidate();
@@ -190,7 +191,7 @@ namespace Pyramid
                 return;
             float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
 
-            _changePyramid.ChangePyramids(new Zoomable(), deltaZoom);
+            _changePyramid.ChangePyramids(new Zoomable(), deltaZoom, NumberOfVertice);
             Invalidate();
         }
     }

@@ -1,0 +1,19 @@
+{
+  "PyramidsNumber": 6,
+  "PyramidSpeed": 12,
+  "PictureBoxColor": "Black",
+  "CheckBoxList": [
+    {
+      "Text": "Ось Х",
+      "Checked": true
+    },
+    {
+      "Text": "Ось Y",
+      "Checked": true
+    },
+    {
+      "Text": "Ось Z",
+      "Checked": true
+    }
+  ]
+}

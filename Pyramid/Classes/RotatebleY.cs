@@ -6,7 +6,7 @@ namespace Pyramid.Classes
 {
     public class RotatebleY : IRotateble
     {
-        public void Transform((List<Point3D[]>,List<Color>) vertices, float angle)
+        public void Transform((List<Point3D[]>,List<Color>) vertices, float angle, int num)
         {
             for (int i = 0; i < vertices.Item1.Count; i++)
             {
