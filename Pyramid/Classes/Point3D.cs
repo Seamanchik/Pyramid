@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Pyramid
+namespace Pyramid.Classes
 {
     public sealed class Point3D
     {
@@ -33,7 +33,7 @@ namespace Pyramid
             Z = newZ;
         }
 
-        public void RotateZ(float angle)
+        public void RotateZ(float angle) //Вращение вокруг оси Z
         {
             float newX = (float)(X * Math.Cos(angle) - Y * Math.Sin(angle));
             float newY = (float)(Y * Math.Cos(angle) + X * Math.Sin(angle));

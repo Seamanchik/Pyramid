@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using Pyramid.Interface;
 
-namespace Pyramid
+namespace Pyramid.Classes
 {
     public class Zoomable : IRotateble
     {

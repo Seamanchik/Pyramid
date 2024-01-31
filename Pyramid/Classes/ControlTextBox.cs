@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Pyramid
+namespace Pyramid.Classes
 {
     public sealed class ControlTextBox : TextBox
     {

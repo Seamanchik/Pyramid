@@ -1,64 +1,63 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
-namespace Pyramid
+namespace Pyramid.Classes
 {
     public class AxisCheck
     {
         private static AxisCheck _instance;
 
-        private AxisCheck() => _checkArray = new List<CheckBox>();
+        private AxisCheck() => _checkList = new List<CheckBox>();
 
-        public static AxisCheck Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new AxisCheck();
-                return _instance;
-            }
-        }
+        public static AxisCheck Instance => _instance ?? (_instance = new AxisCheck());
 
-        private List<CheckBox> _checkArray;
+        private readonly List<CheckBox> _checkList;
 
         public void Check(CheckBox check)
         {
-            if (!_checkArray.Contains(check))
-                _checkArray.Add(check);
+            if (!_checkList.Contains(check))
+                _checkList.Add(check);
         }
 
         public void ActiveCheck(ChangePyramid pyramids)
         {
-            if (_checkArray != null)
+            if (_checkList == null)
+                return;
+            foreach (var checkBox in _checkList.Where(checkBox => checkBox.Checked))
             {
-                foreach (var checkBox in _checkArray)
+                switch (checkBox.TabIndex)
                 {
-                    if (checkBox.Checked)
-                    {
-                        switch (checkBox.TabIndex)
-                        {
-                            case 0:
-                                pyramids.ChangePyramids(new RotatebleX(), 0.02f);
-                                break;
-                            case 1:
-                                pyramids.ChangePyramids(new RotatebleY(), 0.02f);
-                                break;
-                            case 2:
-                                pyramids.ChangePyramids(new RotatebleZ(), 0.02f);
-                                break;
-                        }
-                    }
+                    case 0:
+                        pyramids.ChangePyramids(new RotatebleX(), 0.02f);
+                        break;
+                    case 1:
+                        pyramids.ChangePyramids(new RotatebleY(), 0.02f);
+                        break;
+                    case 2:
+                        pyramids.ChangePyramids(new RotatebleZ(), 0.02f);
+                        break;
                 }
             }
         }
 
         public void Delete()
         {
-            foreach (var checkbox in _checkArray)
-            {
+            foreach (var checkbox in _checkList)
                 checkbox.Checked = false;
+            _checkList.Clear();
+        }
+
+        public List<CheckBoxInfo> GetActualCheckBoxList(TableLayoutPanel tableLayoutPanel4)
+        {
+            var actualCheckBoxList = new List<CheckBoxInfo>();
+
+            foreach (var checkBox in tableLayoutPanel4.Controls.OfType<ControlCheckBox>())
+            {
+                actualCheckBoxList.Add(new CheckBoxInfo { Text = checkBox.Text, Checked = checkBox.Checked });
             }
-            _checkArray = new List<CheckBox>();
+
+            return actualCheckBoxList;
         }
     }
 }

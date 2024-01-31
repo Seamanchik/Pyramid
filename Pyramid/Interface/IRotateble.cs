@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using Pyramid.Classes;
 
-namespace Pyramid
+namespace Pyramid.Interface
 {
     public interface IRotateble
     {
