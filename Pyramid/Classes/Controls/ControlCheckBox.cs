@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.Controls
 {
     public class ControlCheckBox : CheckBox
     {

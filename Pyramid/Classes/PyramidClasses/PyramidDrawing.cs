@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.Pyramid
 {
     public abstract class PyramidDrawing
     {

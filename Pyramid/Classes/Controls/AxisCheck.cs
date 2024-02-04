@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Pyramid.Classes.Pyramid;
+using Pyramid.Classes.RotateClasses;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.Controls
 {
     public class AxisCheck
     {

@@ -1,4 +1,4 @@
-﻿namespace Pyramid.Classes
+﻿namespace Pyramid.Classes.RotateClasses
 {
     public class Zoomable : RotatebleAxis
     {

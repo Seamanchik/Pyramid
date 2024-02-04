@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using Pyramid.Interface;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.RotateClasses
 {
     public abstract class RotatebleAxis : IRotateble
     {

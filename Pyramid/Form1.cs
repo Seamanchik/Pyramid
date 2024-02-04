@@ -2,6 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Pyramid.Classes;
+using Pyramid.Classes.Controls;
+using Pyramid.Classes.Pyramid;
+using Pyramid.Classes.RotateClasses;
 using Timer = System.Windows.Forms.Timer;
 
 namespace Pyramid

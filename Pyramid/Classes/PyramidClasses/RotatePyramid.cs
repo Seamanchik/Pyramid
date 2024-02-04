@@ -2,7 +2,7 @@
 using System.Drawing;
 using Pyramid.Interface;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.Pyramid
 {
     public class RotatePyramid
     {

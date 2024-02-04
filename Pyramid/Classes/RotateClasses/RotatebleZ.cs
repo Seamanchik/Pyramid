@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Pyramid.Classes
+
+namespace Pyramid.Classes.RotateClasses
 {
     public class RotatebleZ : RotatebleAxis
     {

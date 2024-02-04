@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.Pyramid
 {
     public class Pyramids : PyramidDrawing
     {

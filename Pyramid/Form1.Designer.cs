@@ -1,6 +1,7 @@
 ﻿using System.Security.AccessControl;
 using System.Windows.Forms;
 using Pyramid.Classes;
+using Pyramid.Classes.Controls;
 
 namespace Pyramid
 {
@@ -36,15 +37,15 @@ namespace Pyramid
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.controltTextBox1 = new Pyramid.Classes.ControlTextBox();
+            this.controltTextBox1 = new ControlTextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.axisX = new Pyramid.Classes.ControlCheckBox();
-            this.axisY = new Pyramid.Classes.ControlCheckBox();
-            this.axisZ = new Pyramid.Classes.ControlCheckBox();
+            this.axisX = new ControlCheckBox();
+            this.axisY = new ControlCheckBox();
+            this.axisZ = new ControlCheckBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
