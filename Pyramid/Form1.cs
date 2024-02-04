@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using Pyramid.Classes;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Pyramid
 {
@@ -11,7 +10,7 @@ namespace Pyramid
     {
         private const int NumberOfVertice = 5;
         private Pyramids _pyramids;
-        private ChangePyramid _changePyramid;
+        private RotatePyramid _rotatePyramid;
         private bool _isLeftMouseDown;
         private Point _lastMousePos;
         private readonly Timer _timer = new Timer();
@@ -29,41 +28,24 @@ namespace Pyramid
         
         private void Form1_KeyUp(object sender, KeyEventArgs e) => HandleKey(e.KeyCode, false);
         
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e) => CloseApp();
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) => _dataActivity.CloseApp(controltTextBox1, trackBar1.Value, pictureBox1.BackColor, tableLayoutPanel4);
 
         private void Form1_FirstStart(object sender, EventArgs e)
         {
-            var settings = _dataActivity.LoadData();
-            if (settings != null)
-            {
-                controltTextBox1.Text = settings.PyramidsNumber.ToString();
-                trackBar1.Value = settings.PyramidSpeed;
-                pictureBox1.BackColor = settings.PictureBoxColor;
-                
-                foreach (var checkBox in tableLayoutPanel4.Controls.OfType<ControlCheckBox>())
-                    checkBox.Checked = settings.CheckBoxList.Any(cb => cb.Text == checkBox.Text && cb.Checked);
-            }
-            CheckPyramid();
-            TimerStart();
+            _dataActivity.FirstStart(controltTextBox1, trackBar1, pictureBox1, tableLayoutPanel4);
+            InitializePyramids();
             UpdateLabelText();
+            TimerStart();
+            pictureBox1.Invalidate();
+        }
+
+        private void InitializePyramids()
+        {
+            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, int.Parse(controltTextBox1.Text), NumberOfVertice);
+            _rotatePyramid = new RotatePyramid(_pyramids.GetVertices());
         }
         
         private void StopButton_Click(object sender, EventArgs e) => Stop();
-        
-        private void CloseApp()
-        {
-            if (controltTextBox1.Text == @"Введите кол-во пирамид")
-                return;
-            ProgramSettings settings = new ProgramSettings
-            {
-                PyramidsNumber = int.Parse(controltTextBox1.Text),
-                PyramidSpeed = trackBar1.Value,
-                PictureBoxColor = pictureBox1.BackColor,
-                CheckBoxList = AxisCheck.Instance.GetActualCheckBoxList(tableLayoutPanel4)
-            };
-            string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-            _dataActivity.SaveData(json);
-        }
         
         private void ChangePictureBoxBackColor(object sender, EventArgs e)
         {
@@ -84,14 +66,13 @@ namespace Pyramid
             Stop();
             CheckPyramid();
         }
-
+        
         private void CheckPyramid()
         {
             if (!controltTextBox1.CheckPyramidValue())
                 return;
             _timer.Stop();
-            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, int.Parse(controltTextBox1.Text), NumberOfVertice);
-            _changePyramid = new ChangePyramid(_pyramids.GetVertices());
+            InitializePyramids();
             pictureBox1.Invalidate();
         }
 
@@ -100,8 +81,8 @@ namespace Pyramid
             _timer.Stop();
             if (trackBar1.Value == 0)
             {
-                MessageBox.Show(@"Введите значение больше нуля");
-                return;
+                trackBar1.Value = 1;
+                UpdateLabelText();
             }
             _timer.Interval = trackBar1.Value;
             _timer.Start(); 
@@ -109,7 +90,7 @@ namespace Pyramid
         
         private void timer1_Tick(object sender, EventArgs e)
         {
-            AxisCheck.Instance.ActiveCheck(_changePyramid, NumberOfVertice);
+            AxisCheck.Instance.ActiveCheck(_rotatePyramid, NumberOfVertice);
             pictureBox1.Invalidate();
         }
 
@@ -117,21 +98,21 @@ namespace Pyramid
         {
             if (_pyramids == null)
                 return;
-            float delta = isKeyDown ? 0.01f : 0;
+            float delta = isKeyDown ? 0.02f : 0;
 
             switch (key)
             {
                 case Keys.W:
-                    _changePyramid.ChangePyramids(new RotatebleX(), delta, NumberOfVertice);
+                    _rotatePyramid.ChangePyramids(new RotatebleX(), delta, NumberOfVertice);
                     break;
                 case Keys.S:
-                    _changePyramid.ChangePyramids(new RotatebleX(), -delta, NumberOfVertice);
+                    _rotatePyramid.ChangePyramids(new RotatebleX(), -delta, NumberOfVertice);
                     break;
                 case Keys.A:
-                    _changePyramid.ChangePyramids(new RotatebleY(), delta, NumberOfVertice);
+                    _rotatePyramid.ChangePyramids(new RotatebleY(), -delta, NumberOfVertice);
                     break;
                 case Keys.D:
-                    _changePyramid.ChangePyramids(new RotatebleY(), -delta , NumberOfVertice);
+                    _rotatePyramid.ChangePyramids(new RotatebleY(), delta , NumberOfVertice);
                     break;
             }
 
@@ -153,9 +134,9 @@ namespace Pyramid
         }
 
         private void UpdateLabelText() => label1.Text = $@"Текущая скорость: {trackBar1.Value}";
-        
+
         private void PictureBox_Paint(object sender, PaintEventArgs e) => _pyramids?.Draw(e.Graphics, pictureBox1, _pyramids.GetVertices());
-        
+
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -171,12 +152,12 @@ namespace Pyramid
             int deltaX = e.X - _lastMousePos.X;
             int deltaY = e.Y - _lastMousePos.Y;
 
-            _changePyramid.ChangePyramids(new RotatebleX(), deltaY * 0.01f, NumberOfVertice);
-            _changePyramid.ChangePyramids(new RotatebleY(), deltaX * 0.01f, NumberOfVertice);
-            _changePyramid.ChangePyramids(new RotatebleZ(), deltaX * 0.01f, NumberOfVertice);
+            _rotatePyramid.ChangePyramids(new RotatebleX(), deltaY * 0.02f, NumberOfVertice);
+            _rotatePyramid.ChangePyramids(new RotatebleY(), deltaX * 0.02f, NumberOfVertice);
+            _rotatePyramid.ChangePyramids(new RotatebleZ(), deltaX * 0.02f, NumberOfVertice);
 
             _lastMousePos = e.Location;
-            Invalidate();
+            pictureBox1.Invalidate();
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
@@ -191,8 +172,8 @@ namespace Pyramid
                 return;
             float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
 
-            _changePyramid.ChangePyramids(new Zoomable(), deltaZoom, NumberOfVertice);
-            Invalidate();
+            _rotatePyramid.ChangePyramids(new Zoomable(), deltaZoom, NumberOfVertice);
+            pictureBox1.Invalidate();
         }
     }
 }

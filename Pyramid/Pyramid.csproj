@@ -78,8 +78,8 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Classes\AxisCheck.cs" />
-        <Compile Include="Classes\ChangePyramid.cs" />
-        <Compile Include="Classes\CheckBoxInfo.cs" />
+        <Compile Include="Classes\RotatebleAxis.cs" />
+        <Compile Include="Classes\RotatePyramid.cs" />
         <Compile Include="Classes\ControlCheckBox.cs" />
         <Compile Include="Classes\ControlTextBox.cs" />
         <Compile Include="Classes\JsonDataActivity.cs" />

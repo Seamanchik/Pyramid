@@ -1,20 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using Pyramid.Interface;
-
-namespace Pyramid.Classes
+﻿namespace Pyramid.Classes
 {
-    public class Zoomable : IRotateble
+    public class Zoomable : RotatebleAxis
     {
-        public void Transform((List<Point3D[]>,List<Color>) vertices, float factor, int num)
+        protected override void Manipulate(Point3D point,float factor)
         {
-            for (int i = 0; i < vertices.Item1.Count; i++)
-            {
-                for (int j = 0; j < num; j++)
-                {
-                    vertices.Item1[i][j].Zoom(factor);
-                }
-            }
+            point.X *= factor;
+            point.Y *= factor;
+            point.Z *= factor;
         }
     }
 }

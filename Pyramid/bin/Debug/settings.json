@@ -1,6 +1,6 @@
 {
-  "PyramidsNumber": 6,
-  "PyramidSpeed": 12,
+  "PyramidsNumber": 10,
+  "PyramidSpeed": 1,
   "PictureBoxColor": "Black",
   "CheckBoxList": [
     {

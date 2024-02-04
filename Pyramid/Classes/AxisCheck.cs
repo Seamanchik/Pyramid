@@ -20,7 +20,7 @@ namespace Pyramid.Classes
                 _checkList.Add(check);
         }
 
-        public void ActiveCheck(ChangePyramid pyramids, int num)
+        public void ActiveCheck(RotatePyramid pyramids, int num)
         {
             if (_checkList == null)
                 return;

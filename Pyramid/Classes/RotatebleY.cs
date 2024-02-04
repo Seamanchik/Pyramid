@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using Pyramid.Interface;
-
+﻿using System;
 namespace Pyramid.Classes
 {
-    public class RotatebleY : IRotateble
+    public class RotatebleY : RotatebleAxis
     {
-        public void Transform((List<Point3D[]>,List<Color>) vertices, float angle, int num)
+        protected override void Manipulate(Point3D point,float angle) //Вращение вокруг оси Y
         {
-            for (int i = 0; i < vertices.Item1.Count; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    vertices.Item1[i][j].RotateY(angle);
-                }
-            }
+            float newX = (float)(point.X * Math.Cos(angle) + point.Z * Math.Sin(angle));
+            float newZ = (float)(-point.X * Math.Sin(angle) + point.Z * Math.Cos(angle));
+            point.X = newX;
+            point.Z = newZ;
         }
     }
 }

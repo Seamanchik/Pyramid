@@ -4,18 +4,16 @@ using Pyramid.Interface;
 
 namespace Pyramid.Classes
 {
-    public class ChangePyramid
+    public class RotatePyramid
     {
         private IRotateble _rotate;
         private readonly (List<Point3D[]>, List<Color>) _vertices;
 
-        public ChangePyramid((List<Point3D[]>, List<Color>) vertices) => _vertices = vertices;
-
-        private void SetActiveAction(IRotateble rotateble) => this._rotate = rotateble;
-
+        public RotatePyramid((List<Point3D[]>, List<Color>) vertices) => _vertices = vertices;
+        
         public void ChangePyramids(IRotateble rotateble, float value, int num)
         {
-            SetActiveAction(rotateble);
+            _rotate = rotateble;
             _rotate.Transform(_vertices, value, num);
         }
     }
