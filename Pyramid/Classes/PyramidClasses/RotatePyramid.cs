@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using Pyramid.Classes.PointClasses;
 using Pyramid.Interface;
 
-namespace Pyramid.Classes.Pyramid
+namespace Pyramid.Classes.PyramidClasses
 {
     public class RotatePyramid
     {

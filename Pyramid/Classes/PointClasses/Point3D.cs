@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.PointClasses
 {
     public class Point3D
     {
@@ -23,7 +23,7 @@ namespace Pyramid.Classes
             {
                 int centerX = pictureBox.Width / 2;
                 int centerY = pictureBox.Height / 2;
-
+                
                 return new Point((int)X + centerX, (int)Y + centerY);
             }
             else

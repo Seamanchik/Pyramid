@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Pyramid.Classes.Pyramid;
+using Pyramid.Classes.PyramidClasses;
 using Pyramid.Classes.RotateClasses;
 
 namespace Pyramid.Classes.Controls

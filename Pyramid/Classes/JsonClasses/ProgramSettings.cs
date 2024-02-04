@@ -2,7 +2,7 @@
 using System.Drawing;
 using Pyramid.Classes.Controls;
 
-namespace Pyramid.Classes
+namespace Pyramid.Classes.JsonClasses
 {
     public class ProgramSettings
     {

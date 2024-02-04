@@ -1,4 +1,5 @@
 ﻿using System;
+using Pyramid.Classes.PointClasses;
 
 namespace Pyramid.Classes.RotateClasses
 {
