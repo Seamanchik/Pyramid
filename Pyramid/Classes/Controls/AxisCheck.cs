@@ -42,23 +42,15 @@ namespace Pyramid.Classes.Controls
                 }
             }
         }
-
-        public void Delete()
-        {
-            foreach (var checkbox in _checkList)
-                checkbox.Checked = false;
-            _checkList.Clear();
-        }
-
+        
         public List<CheckBoxInfo> GetActualCheckBoxList(TableLayoutPanel tableLayoutPanel4)
         {
             var actualCheckBoxList = new List<CheckBoxInfo>();
-
             foreach (var checkBox in tableLayoutPanel4.Controls.OfType<ControlCheckBox>())
             {
                 actualCheckBoxList.Add(new CheckBoxInfo { Text = checkBox.Text, Checked = checkBox.Checked });
             }
-
+            
             return actualCheckBoxList;
         }
     }

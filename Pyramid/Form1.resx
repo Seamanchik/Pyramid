@@ -127,13 +127,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>566, 0</value>
+    <value>548, 0</value>
   </data>
   <data name="button1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 90</value>
+    <value>103, 90</value>
   </data>
   <data name="button1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -158,13 +158,13 @@
     <value>Fill</value>
   </data>
   <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>511, 0</value>
+    <value>492, 0</value>
   </data>
   <data name="button2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 90</value>
+    <value>56, 90</value>
   </data>
   <data name="button2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -197,7 +197,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="controltTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 27</value>
+    <value>225, 27</value>
   </data>
   <data name="controltTextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -221,13 +221,13 @@
     <value>Fill</value>
   </data>
   <data name="button6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>671, 0</value>
+    <value>651, 0</value>
   </data>
   <data name="button6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="button6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 90</value>
+    <value>87, 90</value>
   </data>
   <data name="button6.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -257,7 +257,7 @@
     <value>3, 34</value>
   </data>
   <data name="trackBar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 47</value>
+    <value>160, 47</value>
   </data>
   <data name="trackBar1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -278,7 +278,7 @@
     <value>3, 0</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 26</value>
+    <value>160, 26</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -302,13 +302,13 @@
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>236, 3</value>
+    <value>232, 3</value>
   </data>
   <data name="tableLayoutPanel3.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="tableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 84</value>
+    <value>166, 84</value>
   </data>
   <data name="tableLayoutPanel3.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -338,7 +338,7 @@
     <value>3, 3</value>
   </data>
   <data name="axisX.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 22</value>
+    <value>79, 22</value>
   </data>
   <data name="axisX.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -365,7 +365,7 @@
     <value>3, 31</value>
   </data>
   <data name="axisY.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 21</value>
+    <value>79, 21</value>
   </data>
   <data name="axisY.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -392,7 +392,7 @@
     <value>3, 58</value>
   </data>
   <data name="axisZ.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 23</value>
+    <value>79, 23</value>
   </data>
   <data name="axisZ.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -416,13 +416,13 @@
     <value>Fill</value>
   </data>
   <data name="tableLayoutPanel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>418, 3</value>
+    <value>404, 3</value>
   </data>
   <data name="tableLayoutPanel4.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="tableLayoutPanel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 84</value>
+    <value>85, 84</value>
   </data>
   <data name="tableLayoutPanel4.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -445,20 +445,14 @@
   <data name="comboBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="comboBox1.Items" xml:space="preserve">
-    <value>RUS</value>
-  </data>
-  <data name="comboBox1.Items1" xml:space="preserve">
-    <value>EN</value>
-  </data>
   <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>751, 0</value>
+    <value>738, 0</value>
   </data>
   <data name="comboBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="comboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 24</value>
+    <value>79, 24</value>
   </data>
   <data name="comboBox1.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -506,7 +500,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="button1" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="button2" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="controltTextBox1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="button6" Row="0" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel3" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel4" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="comboBox1" Row="0" RowSpan="1" Column="6" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,30,95238,Percent,24,20635,Percent,12,83069,Percent,7,407407,Percent,14,02116,Percent,10,59603,Absolute,61" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="button1" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="button2" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="controltTextBox1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="button6" Row="0" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel3" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel4" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="comboBox1" Row="0" RowSpan="1" Column="6" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,30,95238,Percent,23,28042,Percent,12,30159,Percent,7,588076,Percent,13,95664,Percent,11,77249,Absolute,77" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanel2.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>

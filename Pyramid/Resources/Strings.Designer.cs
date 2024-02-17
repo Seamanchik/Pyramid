@@ -58,5 +58,23 @@ namespace Pyramid.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ошибка.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите значение больше нуля.
+        /// </summary>
+        internal static string PyramidValue {
+            get {
+                return ResourceManager.GetString("PyramidValue", resourceCulture);
+            }
+        }
     }
 }

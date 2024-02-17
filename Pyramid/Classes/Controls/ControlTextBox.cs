@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.Resources;
 using System.Windows.Forms;
+using Pyramid.Resources;
 
 namespace Pyramid.Classes.Controls
 {
@@ -15,7 +17,7 @@ namespace Pyramid.Classes.Controls
             ForeColor = _color;
         }
 
-        private readonly string _placeholder = "Введите кол-во пирамид";
+        private readonly string _placeholder = $"{new ResourceManager(typeof(Form1)).GetString("controltTextBox1.Text")}";
         private readonly Color _color = Color.FromArgb(91, 91, 91);
 
         private void ControlTextBox_Enter(object sender, EventArgs e)
@@ -46,7 +48,7 @@ namespace Pyramid.Classes.Controls
         {
             if (int.TryParse(Text, out int v) && v <= 0 || Text == _placeholder)
             {
-                MessageBox.Show(@"Введите значение больше нуля", @"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"{Strings.PyramidValue}", $@"{Strings.Error}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;

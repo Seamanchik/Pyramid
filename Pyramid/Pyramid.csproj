@@ -129,6 +129,9 @@
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>Strings.en-EN.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.en.resx">
+          <DependentUpon>Strings.resx</DependentUpon>
+        </EmbeddedResource>
         <EmbeddedResource Include="Resources\Strings.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>Strings.Designer.cs</LastGenOutput>

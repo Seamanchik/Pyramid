@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 using System.Resources;
+using System.Threading;
 using System.Windows.Forms;
 using Pyramid.Classes.Controls;
 using Pyramid.Classes.JsonClasses;
 using Pyramid.Classes.PyramidClasses;
 using Pyramid.Classes.RotateClasses;
+using Pyramid.Properties;
 using Timer = System.Windows.Forms.Timer;
 
 namespace Pyramid
@@ -24,6 +27,12 @@ namespace Pyramid
 
         public Form1()
         {
+            if (!string.IsNullOrEmpty(Settings.Default.Language))
+            {
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+            }
+
             InitializeComponent();
             _timer.Tick += timer1_Tick;
             trackBar1.Scroll -= trackBar1_Scroll;
@@ -42,20 +51,38 @@ namespace Pyramid
         {
             _dataActivity.FirstStart(controltTextBox1, trackBar1, pictureBox1, tableLayoutPanel4, comboBox1);
             InitializePyramids();
-            UpdateElements();
             UpdateLabelText();
             TimerStart();
             pictureBox1.Invalidate();
         }
-
-        private void UpdateElements()
+        
+        private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            button6.Text = _resourceManager.GetString("button6.Text");
-            button2.Text = _resourceManager.GetString("button2.Text");
-            button1.Text = _resourceManager.GetString("button1.Text");
-            axisX.Text = _resourceManager.GetString("axisX.Text");
-            axisY.Text = _resourceManager.GetString("axisY.Text");
-            axisZ.Text = _resourceManager.GetString("axisZ.Text");
+            _pyramids.ResizePyramids(pictureBox1.Width, pictureBox1.Height, NumberOfVertice);
+            pictureBox1.Invalidate();
+        }
+
+        private void UpdateControlsLanguage(Control control, ResourceManager resourceManager, CultureInfo cultureInfo)
+        {
+            foreach (Control ctrl in control.Controls)
+            {
+                switch (ctrl)
+                {
+                    case Label label:
+                        label.Text = resourceManager.GetString(label.Name + ".Text", cultureInfo);
+                        UpdateLabelText();
+                        break;
+                    case Button button:
+                        button.Text = resourceManager.GetString(button.Name + ".Text", cultureInfo);
+                        break;
+                    case CheckBox checkBox:
+                        checkBox.Text = resourceManager.GetString(checkBox.Name + ".Text", cultureInfo);
+                        break;
+                }
+
+                if (ctrl.HasChildren)
+                    UpdateControlsLanguage(ctrl, resourceManager, cultureInfo);
+            }
         }
 
         private void InitializePyramids()
@@ -190,6 +217,8 @@ namespace Pyramid
             _rotatePyramid.ChangePyramids(new Zoomable(), deltaZoom, NumberOfVertice);
             pictureBox1.Invalidate();
         }
-        // private void pictureBox1_SizeChanged(object sender, EventArgs e) => CheckPyramid();
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) => UpdateControlsLanguage(this, _resourceManager,
+                CultureInfo.GetCultureInfo(comboBox1.SelectedValue.ToString()));
     }
 }

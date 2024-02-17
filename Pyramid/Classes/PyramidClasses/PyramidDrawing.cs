@@ -9,7 +9,9 @@ namespace Pyramid.Classes.PyramidClasses
     public abstract class PyramidDrawing
     {
         private readonly Dictionary<Color, Pen> _pens = new Dictionary<Color, Pen>();
-        private Point3D[] FillingPyramid(float width, float height)
+        protected readonly List<Color> Colors = new List<Color>();
+
+        protected Point3D[] FillingPyramid(float width, float height)
         {
             Point3D[] pointsArray = new[]
             {
@@ -53,12 +55,14 @@ namespace Pyramid.Classes.PyramidClasses
             {
                 _pens.Clear();
                 pyramidList.Item1.Add(FillingPyramid(width,height));
-                pyramidList.Item2.Add(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)));
+                Color color = Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
+                pyramidList.Item2.Add(color);
+                Colors.Add(color);
                 width /= 1.1f;
                 height /= 1.1f;
             }
         }
-
+        
         public abstract (List<Point3D[]>,List<Color>) GetVertices();
     }
 }

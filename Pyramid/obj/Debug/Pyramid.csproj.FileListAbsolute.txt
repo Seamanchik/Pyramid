@@ -31,3 +31,6 @@ E:\ProjectsRider\Pyramid\Pyramid\bin\Debug\Newtonsoft.Json.xml
 E:\ProjectsRider\Pyramid\Pyramid\bin\Debug\en\Pyramid.resources.dll
 E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.Form1.en.resources
 E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\en\Pyramid.resources.dll
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.Resources.Strings.en-EN.resources
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.Resources.Strings.resources
+E:\ProjectsRider\Pyramid\Pyramid\obj\Debug\Pyramid.Resources.Strings.en.resources

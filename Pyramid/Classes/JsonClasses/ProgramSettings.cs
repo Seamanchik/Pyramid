@@ -10,6 +10,5 @@ namespace Pyramid.Classes.JsonClasses
         public int PyramidSpeed { get; set; }
         public Color PictureBoxColor { get; set; }
         public List<CheckBoxInfo> CheckBoxList { get; set; }
-        public object Language { get; set; }
     }
 }
