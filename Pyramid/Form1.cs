@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Resources;
 using System.Windows.Forms;
-using Pyramid.Classes;
 using Pyramid.Classes.Controls;
 using Pyramid.Classes.JsonClasses;
 using Pyramid.Classes.PyramidClasses;
@@ -19,63 +19,63 @@ namespace Pyramid
         private Point _lastMousePos;
         private readonly Timer _timer = new Timer();
         private readonly JsonDataActivity _dataActivity = new JsonDataActivity();
-        
+        private bool _stopflag;
+        private readonly ResourceManager _resourceManager = new ResourceManager(typeof(Form1));
+
         public Form1()
         {
             InitializeComponent();
             _timer.Tick += timer1_Tick;
             trackBar1.Scroll -= trackBar1_Scroll;
             trackBar1.Scroll += trackBar1_Scroll;
-        } 
-        
+        }
+
         private void Form1_KeyDown(object sender, KeyEventArgs e) => HandleKey(e.KeyCode, true);
-        
+
         private void Form1_KeyUp(object sender, KeyEventArgs e) => HandleKey(e.KeyCode, false);
-        
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e) => _dataActivity.CloseApp(controltTextBox1, trackBar1.Value, pictureBox1.BackColor, tableLayoutPanel4);
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) =>
+            _dataActivity.CloseApp(controltTextBox1, trackBar1.Value, pictureBox1.BackColor, tableLayoutPanel4,
+                comboBox1);
 
         private void Form1_FirstStart(object sender, EventArgs e)
         {
-            _dataActivity.FirstStart(controltTextBox1, trackBar1, pictureBox1, tableLayoutPanel4);
+            _dataActivity.FirstStart(controltTextBox1, trackBar1, pictureBox1, tableLayoutPanel4, comboBox1);
             InitializePyramids();
+            UpdateElements();
             UpdateLabelText();
             TimerStart();
             pictureBox1.Invalidate();
         }
 
+        private void UpdateElements()
+        {
+            button6.Text = _resourceManager.GetString("button6.Text");
+            button2.Text = _resourceManager.GetString("button2.Text");
+            button1.Text = _resourceManager.GetString("button1.Text");
+            axisX.Text = _resourceManager.GetString("axisX.Text");
+            axisY.Text = _resourceManager.GetString("axisY.Text");
+            axisZ.Text = _resourceManager.GetString("axisZ.Text");
+        }
+
         private void InitializePyramids()
         {
-            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, int.Parse(controltTextBox1.Text), NumberOfVertice);
+            _pyramids = new Pyramids(pictureBox1.Width, pictureBox1.Height, int.Parse(controltTextBox1.Text),
+                NumberOfVertice);
             _rotatePyramid = new RotatePyramid(_pyramids.GetVertices());
         }
-        
+
         private void StopButton_Click(object sender, EventArgs e) => Stop();
-        
-        private void ChangePictureBoxBackColor(object sender, EventArgs e)
-        {
-            if (pictureBox1.BackColor == Color.White)
-            {
-                pictureBox1.BackColor = Color.Black;
-                button1.Text = @"Светлая тема";
-            }
-            else
-            {
-                pictureBox1.BackColor = Color.White;
-                button1.Text = @"Тёмная тема";
-            }
-        }
-        
-        private void btnCreatePyramid_Click(object sender, EventArgs e)
-        {
-            Stop();
-            CheckPyramid();
-        }
-        
+
+        private void ChangePictureBoxBackColor(object sender, EventArgs e) =>
+            pictureBox1.BackColor = pictureBox1.BackColor == Color.White ? Color.Black : Color.White;
+
+        private void btnCreatePyramid_Click(object sender, EventArgs e) => CheckPyramid();
+
         private void CheckPyramid()
         {
             if (!controltTextBox1.CheckPyramidValue())
                 return;
-            _timer.Stop();
             InitializePyramids();
             pictureBox1.Invalidate();
         }
@@ -88,10 +88,11 @@ namespace Pyramid
                 trackBar1.Value = 1;
                 UpdateLabelText();
             }
-            _timer.Interval = trackBar1.Value;
-            _timer.Start(); 
+
+            _timer.Interval = Math.Abs(trackBar1.Value - 99) == 0 ? 1 : Math.Abs(trackBar1.Value - 99);
+            _timer.Start();
         }
-        
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             AxisCheck.Instance.ActiveCheck(_rotatePyramid, NumberOfVertice);
@@ -116,30 +117,40 @@ namespace Pyramid
                     _rotatePyramid.ChangePyramids(new RotatebleY(), -delta, NumberOfVertice);
                     break;
                 case Keys.D:
-                    _rotatePyramid.ChangePyramids(new RotatebleY(), delta , NumberOfVertice);
+                    _rotatePyramid.ChangePyramids(new RotatebleY(), delta, NumberOfVertice);
                     break;
             }
 
             pictureBox1.Invalidate();
         }
-        
+
         private void Stop()
         {
-            AxisCheck.Instance.Delete();
-            trackBar1.Value = 0;
-            UpdateLabelText();
-            _timer.Stop();
+            if (!_stopflag)
+            {
+                _timer.Stop();
+                _stopflag = true;
+            }
+            else
+            {
+                _stopflag = false;
+                AxisCheck.Instance.ActiveCheck(_rotatePyramid, NumberOfVertice);
+                TimerStart();
+            }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
-        {       
+        {
+            if (!_stopflag)
+                TimerStart();
             UpdateLabelText();
-            TimerStart();
         }
 
-        private void UpdateLabelText() => label1.Text = $@"Текущая скорость: {trackBar1.Value}";
+        private void UpdateLabelText() =>
+            label1.Text = $@"{_resourceManager.GetString("label1.Text")} {trackBar1.Value}";
 
-        private void PictureBox_Paint(object sender, PaintEventArgs e) => _pyramids?.Draw(e.Graphics, pictureBox1, _pyramids.GetVertices());
+        private void PictureBox_Paint(object sender, PaintEventArgs e) =>
+            _pyramids?.Draw(e.Graphics, pictureBox1, _pyramids.GetVertices());
 
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
         {
@@ -169,7 +180,7 @@ namespace Pyramid
             if (e.Button == MouseButtons.Left)
                 _isLeftMouseDown = false;
         }
-        
+
         private void PictureBox_Scroll(object sender, MouseEventArgs e)
         {
             if (_pyramids == null)
@@ -179,5 +190,6 @@ namespace Pyramid
             _rotatePyramid.ChangePyramids(new Zoomable(), deltaZoom, NumberOfVertice);
             pictureBox1.Invalidate();
         }
+        // private void pictureBox1_SizeChanged(object sender, EventArgs e) => CheckPyramid();
     }
 }

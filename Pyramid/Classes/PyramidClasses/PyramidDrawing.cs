@@ -54,8 +54,8 @@ namespace Pyramid.Classes.PyramidClasses
                 _pens.Clear();
                 pyramidList.Item1.Add(FillingPyramid(width,height));
                 pyramidList.Item2.Add(Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)));
-                width /= 1.2f;
-                height /= 1.2f;
+                width /= 1.1f;
+                height /= 1.1f;
             }
         }
 

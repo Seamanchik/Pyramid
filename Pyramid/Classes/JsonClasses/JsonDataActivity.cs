@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
-using System.IO;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Pyramid.Classes.Controls;
+using Pyramid.Properties;
 
 namespace Pyramid.Classes.JsonClasses
 {
@@ -11,22 +13,12 @@ namespace Pyramid.Classes.JsonClasses
     {
         private ProgramSettings LoadData()
         {
-            if (!File.Exists("settings.json")) 
-                return null;
-            string json = File.ReadAllText("settings.json");
-            ProgramSettings settings = JsonConvert.DeserializeObject<ProgramSettings>(json);
-
+            ProgramSettings settings = JsonConvert.DeserializeObject<ProgramSettings>(Settings.Default.JsonData);
             return settings;
         }
 
-        private void SaveData(string json)
-        {
-            StreamWriter streamWriter = File.CreateText("settings.json");
-            streamWriter.WriteLine(json);
-            streamWriter.Close();
-        }
-
-        public void CloseApp(ControlTextBox controlTextBox, int trackBarValue, Color pictureBoxBackColor, TableLayoutPanel tableLayoutPanel)
+        public void CloseApp(ControlTextBox controlTextBox, int trackBarValue, Color pictureBoxBackColor,
+            TableLayoutPanel tableLayoutPanel, ComboBox comboBox)
         {
             if (controlTextBox.Text == @"Введите кол-во пирамид" || !int.TryParse(controlTextBox.Text, out int num))
                 return;
@@ -35,13 +27,16 @@ namespace Pyramid.Classes.JsonClasses
                 PyramidsNumber = num,
                 PyramidSpeed = trackBarValue,
                 PictureBoxColor = pictureBoxBackColor,
-                CheckBoxList = AxisCheck.Instance.GetActualCheckBoxList(tableLayoutPanel)
+                CheckBoxList = AxisCheck.Instance.GetActualCheckBoxList(tableLayoutPanel),
+                Language = comboBox.SelectedItem
             };
-            string json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-            SaveData(json);
+            Settings.Default.JsonData = JsonConvert.SerializeObject(settings, Formatting.Indented);
+            Settings.Default.Save();
         }
 
-        public void FirstStart(ControlTextBox controlTextBox, TrackBar trackBar, PictureBox pictureBox, TableLayoutPanel tableLayoutPanel)
+
+        public void FirstStart(ControlTextBox controlTextBox, TrackBar trackBar, PictureBox pictureBox,
+            TableLayoutPanel tableLayoutPanel, ComboBox comboBox)
         {
             var settings = LoadData();
             if (settings != null)
@@ -49,7 +44,11 @@ namespace Pyramid.Classes.JsonClasses
                 controlTextBox.Text = settings.PyramidsNumber.ToString();
                 trackBar.Value = settings.PyramidSpeed;
                 pictureBox.BackColor = settings.PictureBoxColor;
-
+                comboBox.SelectedItem = settings.Language;
+                
+                Thread.CurrentThread.CurrentUICulture =
+                    CultureInfo.GetCultureInfo((string)comboBox.SelectedItem == "EN" ? "en-EN" : "ru-RU");
+                
                 foreach (var checkBox in tableLayoutPanel.Controls.OfType<ControlCheckBox>())
                     checkBox.Checked = settings.CheckBoxList.Any(cb => cb.Text == checkBox.Text && cb.Checked);
             }
