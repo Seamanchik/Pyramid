@@ -9,9 +9,9 @@ namespace Pyramid.Classes.PyramidClasses
     public abstract class PyramidDrawing
     {
         private readonly Dictionary<Color, Pen> _pens = new Dictionary<Color, Pen>();
-        protected readonly List<Color> Colors = new List<Color>();
+        private readonly List<Color> _colors = new List<Color>();
 
-        protected Point3D[] FillingPyramid(float width, float height)
+        private Point3D[] FillingPyramid(float width, float height)
         {
             Point3D[] pointsArray = new[]
             {
@@ -57,9 +57,20 @@ namespace Pyramid.Classes.PyramidClasses
                 pyramidList.Item1.Add(FillingPyramid(width,height));
                 Color color = Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
                 pyramidList.Item2.Add(color);
-                Colors.Add(color);
+                _colors.Add(color);
                 width /= 1.1f;
                 height /= 1.1f;
+            }
+        }
+
+        protected void Resize((List<Point3D[]>, List<Color>) pyramidList,float newWidth, float newHeight)
+        {
+            foreach (Color color in _colors)
+            {
+                pyramidList.Item1.Add(FillingPyramid(newWidth, newHeight));
+                pyramidList.Item2.Add(color);
+                newWidth /= 1.1f;
+                newHeight /= 1.1f;
             }
         }
         

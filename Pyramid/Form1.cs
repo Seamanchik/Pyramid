@@ -28,11 +28,8 @@ namespace Pyramid
         public Form1()
         {
             if (!string.IsNullOrEmpty(Settings.Default.Language))
-            {
-                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
                 Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
-            }
-
+                
             InitializeComponent();
             _timer.Tick += timer1_Tick;
             trackBar1.Scroll -= trackBar1_Scroll;
@@ -64,6 +61,7 @@ namespace Pyramid
 
         private void UpdateControlsLanguage(Control control, ResourceManager resourceManager, CultureInfo cultureInfo)
         {
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
             foreach (Control ctrl in control.Controls)
             {
                 switch (ctrl)
@@ -174,7 +172,8 @@ namespace Pyramid
         }
 
         private void UpdateLabelText() =>
-            label1.Text = $@"{_resourceManager.GetString("label1.Text")} {trackBar1.Value}";
+            label1.Text = $@"{_resourceManager.GetString("label1.Text", CultureInfo.CurrentCulture)} {trackBar1.Value}";
+
 
         private void PictureBox_Paint(object sender, PaintEventArgs e) =>
             _pyramids?.Draw(e.Graphics, pictureBox1, _pyramids.GetVertices());
