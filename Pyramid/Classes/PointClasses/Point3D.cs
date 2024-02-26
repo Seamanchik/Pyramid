@@ -16,7 +16,7 @@ namespace Pyramid.Classes.PointClasses
             Y = y;
             Z = z;
         }
-
+        
         public Point To2D(PictureBox pictureBox)
         {
             if (pictureBox != null)

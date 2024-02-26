@@ -28,8 +28,11 @@ namespace Pyramid
         public Form1()
         {
             if (!string.IsNullOrEmpty(Settings.Default.Language))
+            {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
-                
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+            }
+
             InitializeComponent();
             _timer.Tick += timer1_Tick;
             trackBar1.Scroll -= trackBar1_Scroll;
@@ -52,7 +55,7 @@ namespace Pyramid
             TimerStart();
             pictureBox1.Invalidate();
         }
-        
+
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             _pyramids.ResizePyramids(pictureBox1.Width, pictureBox1.Height, NumberOfVertice);
@@ -174,7 +177,6 @@ namespace Pyramid
         private void UpdateLabelText() =>
             label1.Text = $@"{_resourceManager.GetString("label1.Text", CultureInfo.CurrentCulture)} {trackBar1.Value}";
 
-
         private void PictureBox_Paint(object sender, PaintEventArgs e) =>
             _pyramids?.Draw(e.Graphics, pictureBox1, _pyramids.GetVertices());
 
@@ -212,12 +214,12 @@ namespace Pyramid
             if (_pyramids == null)
                 return;
             float deltaZoom = e.Delta > 0 ? 1.1f : 0.9f;
-
             _rotatePyramid.ChangePyramids(new Zoomable(), deltaZoom, NumberOfVertice);
             pictureBox1.Invalidate();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) => UpdateControlsLanguage(this, _resourceManager,
-                CultureInfo.GetCultureInfo(comboBox1.SelectedValue.ToString()));
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) => UpdateControlsLanguage(this,
+            _resourceManager,
+            CultureInfo.GetCultureInfo(comboBox1.SelectedValue.ToString()));
     }
 }

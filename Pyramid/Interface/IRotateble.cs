@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using Pyramid.Classes;
 using Pyramid.Classes.PointClasses;
 
 namespace Pyramid.Interface

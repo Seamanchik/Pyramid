@@ -10,7 +10,8 @@ namespace Pyramid.Classes.PyramidClasses
     {
         private readonly Dictionary<Color, Pen> _pens = new Dictionary<Color, Pen>();
         private readonly List<Color> _colors = new List<Color>();
-
+        private const float ScaleNum = 1.1f;
+        
         private Point3D[] FillingPyramid(float width, float height)
         {
             Point3D[] pointsArray = new[]
@@ -26,8 +27,12 @@ namespace Pyramid.Classes.PyramidClasses
         
         public void Draw(Graphics g, PictureBox pictureBox, (List<Point3D[]>, List<Color>) vertices)
         {
+            Rectangle visibleRect = pictureBox.ClientRectangle;
+
             for (int i = 0; i < vertices.Item1.Count; i++)
             {
+                if (!IsPyramidVisible(vertices.Item1[i], visibleRect, pictureBox)) 
+                    continue;
                 Pen pen = GetPen(vertices.Item2[i]);
                 for (int j = 0; j < 4; j++)
                 {
@@ -36,7 +41,18 @@ namespace Pyramid.Classes.PyramidClasses
                 }
             }
         }
-
+        
+        private bool IsPyramidVisible(Point3D[] pyramid, Rectangle visibleRect, PictureBox pictureBox)
+        {
+            foreach (var point in pyramid)
+            {
+                Point point2D = point.To2D(pictureBox);
+                if (visibleRect.Contains(point2D))
+                    return true;
+            }
+            return false;
+        }
+        
         private Pen GetPen(Color color)
         {
             if (!_pens.ContainsKey(color))
@@ -58,8 +74,8 @@ namespace Pyramid.Classes.PyramidClasses
                 Color color = Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
                 pyramidList.Item2.Add(color);
                 _colors.Add(color);
-                width /= 1.1f;
-                height /= 1.1f;
+                width /= ScaleNum;
+                height /= ScaleNum;
             }
         }
 
@@ -69,8 +85,8 @@ namespace Pyramid.Classes.PyramidClasses
             {
                 pyramidList.Item1.Add(FillingPyramid(newWidth, newHeight));
                 pyramidList.Item2.Add(color);
-                newWidth /= 1.1f;
-                newHeight /= 1.1f;
+                newWidth /= ScaleNum;
+                newHeight /= ScaleNum;
             }
         }
         
